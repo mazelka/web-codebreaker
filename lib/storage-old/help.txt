@@ -1,0 +1,6 @@
+Please choose one from listed commands:
+
+- start
+- rules
+- stats
+- exit

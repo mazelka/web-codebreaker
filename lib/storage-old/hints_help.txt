@@ -1,0 +1,5 @@
+Enter 1, 2 or 3 to select difficulty:
+
+1. Easy - 15 attempts. 2 hints
+2. Medium - 10 attempts. 1 hint
+3. Hell - 5 attempts. 1 hint
