@@ -24,7 +24,7 @@
               <button type="button" class="btn btn-primary" disabled>
                 Level:
                 <span class="badge badge-light">
-                  <%=@game.stats.difficulty%>
+                  <%=level_to_word(@game.stats.difficulty)%>
                 </span>
               </button>
               <button type="button" class="btn btn-primary" disabled>
@@ -46,11 +46,11 @@
             <div class="text-center">
               <div class="text-center">
                 <h3 class="text-white">
-                  Oops, <%=@game.user%>! You lose the game!
+                  Oops, <%=@game.stats.name%>! You lose the game!
                 </h3>
                 <h4 class="text-white">
                   The code was
-                  <strong><%=@game.secret_code.join%></strong>
+                  <strong><%=@game.instance_variable_get(:@secret_code)%></strong>
                 </h4>
               </div>
               <img src="assets/images/lost.gif" class="img-fluid" alt="You lose the game!">
@@ -60,7 +60,7 @@
           <a class="btn btn-primary btn-lg" href="/menu" role="button">
             Play again!
           </a>
-          <a class="btn btn-success btn-lg float-right" href="#" role="button">
+          <a class="btn btn-success btn-lg float-right" href="/statistics" role="button">
             Statistics
           </a>
         </div>

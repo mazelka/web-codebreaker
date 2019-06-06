@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/mazelka/codebreaker
-  revision: 24ae3ffbd62450efa3791a99489ae0ef50ba7e17
+  revision: d922e71538cadc2238bb2333970eb7366380d123
   branch: feature/solution
   specs:
     codebreaker (0.1.0)
@@ -37,6 +37,9 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
+    unicode-display_width (1.6.0)
 
 PLATFORMS
   ruby
@@ -48,6 +51,7 @@ DEPENDENCIES
   rack-test (~> 1.1)
   rspec (~> 3.8.0)
   simplecov
+  terminal-table
 
 BUNDLED WITH
    1.17.3

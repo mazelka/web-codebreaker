@@ -1,118 +1,88 @@
 require 'erb'
 require 'pry'
-require 'yaml'
 require 'codebreaker'
-# require_relative 'codebreaker/game'
-
-class Box
-  def self.get
-    @@codebreaker ||= Codebreaker.new
-  end
-end
+require_relative 'helpers/response'
+require_relative 'helpers/statistics'
+require_relative 'helpers/ui_helper'
 
 class Racker
+  include Response
+  include Statistics
+  include UIHelper
+
   def self.call(env)
     new(env).response.finish
   end
 
   def initialize(env)
-    binding.pry
     @request = Rack::Request.new(env)
   end
 
   def response
-    case @request.path
-    when '/game'
-      if @request.session['game'].nil? || !session_present?
-        Rack::Response.new do |response|
-          response.redirect('/menu')
-        end
-      else
-        @game = game
-        p @game
-        p @game.secret_code
-        p @result = result.chars
-        Rack::Response.new(render('/game.html.erb'))
-      end
-    when '/submit_answer'
-      @game = game
-      p @request['number'].chars
-      @result = @game.break_code(@request['number'].chars.map(&:to_i))
-      p @result
-      if @game.stats.all_attempts_used? && @result != '++++'
-        Rack::Response.new do |response|
-          response.redirect('/menu') unless session_present?
-          response.set_cookie('result', @result)
-          response.set_cookie('game', YAML.dump(@game))
-          response.redirect('/lose')
-        end
-      else
-        Rack::Response.new do |response|
-          response.redirect('/menu') unless session_present?
-          response.set_cookie('result', @result)
-          response.set_cookie('game', YAML.dump(@game))
-          response.redirect('/game')
-        end
-      end
-    when '/menu'
-      Rack::Response.new(render('/menu.html.erb')) do
-        # binding.pry
-        # @request.session[]
-        @request.session[:name] = 'John Doe' unless session_present?
-        @request.cookies['rack.session'] = @request.env['rack.session'] unless session_present?
-      end
-    when '/lose'
-      @game = game
-      Rack::Response.new(render('/lose.html.erb')) do |response|
-        response.redirect('/menu') unless session_present?
-        response.set_cookie('result', '')
-        @request.session[:name] = 'John Doe' unless session_present?
-      end
-    when '/win'
-      @game = game
-      Rack::Response.new(render('/win.html.erb')) do |response|
-        response.redirect('/menu') unless session_present?
-        response.set_cookie('result', '')
-        @request.session[:name] = 'John Doe' unless session_present?
-      end
-    when '/statistics'
-      @game = game
-      @sorted_stats = @game.sort_statistic
-      Rack::Response.new(render('/statistics.html.erb')) do |response|
-        response.redirect('/menu') unless session_present?
-        response.set_cookie('result', '')
-        @request.session[:name] = 'John Doe' unless session_present?
-      end
-    when '/start_game'
-      code = Codebreaker.new
-      game = code.start_game(@request['player_name'], @request['level'])
-      Rack::Response.new do |response|
-        response.redirect('/menu') unless session_present?
-        response.set_cookie('game', YAML.dump(game))
-        response.redirect('/game')
-      end
-    else Rack::Response.new('Not Found', 404)
+    @request.session[:init] = true
+    if session_present?
+      response_with_session
+    else
+      redirect_to_menu
     end
   end
 
   private
+
+  def response_with_session
+    if game_required?
+      response_with_game
+    else
+      response_wihtout_game
+    end
+  end
+
+  def response_with_game
+    game_present? ? response_with_game_and_session : redirect_to_menu
+  end
+
+  def response_with_game_and_session
+    case @request.path
+    when '/game'
+      play_the_game
+    when '/submit_answer'
+      submit_answer
+    when '/lose'
+      game_lose
+    when '/win'
+      game_win
+    when '/show_hint'
+      show_hint
+    end
+  end
+
+  def response_wihtout_game
+    case @request.path
+    when '/rules'
+      Rack::Response.new(render('/rules.html.erb'))
+    when '/menu'
+      Rack::Response.new(render('/menu.html.erb'))
+    when '/statistics'
+      @statistic = sort_statistic
+      Rack::Response.new(render('/statistics.html.erb'))
+    when '/start_game'
+      start_game
+      redirect_to_game
+    else
+      Rack::Response.new('Not Found', 404)
+    end
+  end
 
   def render(template)
     path = File.expand_path("../../codebreaker-web-template/#{template}", __FILE__)
     ERB.new(File.read(path)).result(binding)
   end
 
-  def session_present?
-    @request.session.key?(:name)
+  def game_to_yaml
+    YAML.dump(@game)
   end
 
   def game
-    @game = Psych.safe_load(@request.session['game'], [Game, GameStatistic, Time], [], true)
-    binding.pry
-    @game
-  end
-
-  def result
-    @request.cookies['result'] || ''
+    @game = Psych.safe_load(@request.session[:game], [Game, GameStatistic, Time], [], true)
   end
 end

@@ -37,42 +37,18 @@
                 </tr>
               </thead>
               <tbody>
-              <%@sorted_stats.each do |game|%>
+              <%@statistic.each do |game|%>
               <%i = 1%>
                 <tr>
                   <th scope="row"><%=i%></th>
                   <td><%=game.name%></td>
-                  <td><%=game.difficulty%></td>
-                  <td><%game.attempts_used%>/<%game.attempts_total%></td>
-                  <td><%=game.hints_used%>/<%=game.hints_total%></td>
-                  <td><%=Time.now.strftime('%Y-%m-%d %H:%M')%></td>
+                  <td><%=level_to_word(game.difficulty)%></td>
+                  <td><%=game.attempts_available%>/<%=game.attempts_total%></td>
+                  <td><%=game.hints_available%>/<%=game.hints_total%></td>
+                  <td><%=game.date%></td>
                 </tr>
                  <%i += 1%>
                  <%end%>
-                <%# <tr>
-                  <th scope="row">2</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr> %>
               </tbody>
             </table>
           </div>

@@ -1,9 +1,0 @@
-Hello stranger!
-This is codebreaker.
-Challenge yourself!
-
-Enter one of the following:
-- start
-- rules
-- stats
-- exit

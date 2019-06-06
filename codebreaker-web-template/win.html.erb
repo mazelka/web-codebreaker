@@ -24,7 +24,7 @@
               <button type="button" class="btn btn-primary" disabled>
                 Level:
                 <span class="badge badge-light">
-                  <%=@game.stats.difficulty%>
+                  <%=level_to_word(@game.stats.difficulty)%>
                 </span>
               </button>
               <button type="button" class="btn btn-primary" disabled>
@@ -46,7 +46,7 @@
             <div class="text-center">
               <div class="text-center">
                 <h3 class="text-white">
-                  Congratulations, <%=@game.user%> ! You won the game!
+                  Congratulations, <%=@game.stats.name%> ! You won the game!
                 </h3>
               </div>
               <img src="assets/images/won.gif" class="img-fluid" alt="You won the game!">

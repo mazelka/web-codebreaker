@@ -1,0 +1,57 @@
+---
+- !ruby/object:GameStatistic
+  name: Statistic
+  attempts_used: 0
+  hints_used: 0
+  date: 2019-06-03 16:51
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: Bafka
+  attempts_used: 5
+  hints_used: 0
+  date: 2019-06-06 16:28
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: Mash
+  attempts_used: 5
+  hints_used: 0
+  date: 2019-06-06 16:43
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: nanana
+  attempts_used: 10
+  hints_used: 0
+  date: 2019-06-05 18:54
+  difficulty: 2
+  attempts_total: 10
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: Kasha
+  attempts_used: 2
+  hints_used: 1
+  date: 2019-06-06 10:33
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: Kasha
+  attempts_used: 5
+  hints_used: 0
+  date: 2019-06-06 10:33
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: Kasha
+  attempts_used: 5
+  hints_used: 0
+  date: 2019-06-06 10:33
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
