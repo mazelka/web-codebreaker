@@ -62,6 +62,8 @@ class Racker
       Rack::Response.new(render('/rules.html.erb'))
     when '/menu'
       Rack::Response.new(render('/menu.html.erb'))
+    when '/'
+      redirect_to_menu
     when '/statistics'
       @statistic = sort_statistic
       Rack::Response.new(render('/statistics.html.erb'))
