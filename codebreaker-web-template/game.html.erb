@@ -24,7 +24,7 @@
               </div>
             </div>
             <p class="lead text-white-70">
-              Hello, <%= @game.stats.name%>! Try to guess 4-digit number, that consists of numbers
+              Hello, <%= @game.stats.name %>! Try to guess 4-digit number, that consists of numbers
               in a range from 1 to 6.
             </p>
             <hr class="mb-4" />
@@ -59,7 +59,7 @@
                   class="form-control guess_input"
                   name="number"
                   pattern="^[1-6]{4}$"
-                  placeholder="<%=@guess%>"
+                  placeholder="<%= @guess %>"
                   required=""
                   autocomplete="off"
                   autofocus = ""
@@ -68,10 +68,10 @@
               <div class="form-group guess_markers_list">
                 <div id="guess_marker">
                 <% @result.each do |result| %>
-                  <button type="button" class="btn <%=colored_result(result)%> marks" disabled>
-                    <%=result%>
+                  <button type="button" class="btn <%= colored_result(result) %> marks" disabled>
+                    <%= result %>
                   </button>
-                  <%end%>
+                  <% end %>
                 </div>
               </div>
               <hr class="mb-4" />
@@ -81,9 +81,9 @@
               </button>
               <a class="btn btn-warning btn-lg float-right" href="/show_hint" role="button">
                 Show hint!
-                <%@hints.each do |hint|%>
-                <span class="badge badge-light"><%=hint%></span>
-                <%end%>
+                <% @hints.each do |hint| %>
+                <span class="badge badge-light"><%= hint %></span>
+                <% end %>
               </a>
             </form>
           </div>

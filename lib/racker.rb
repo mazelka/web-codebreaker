@@ -1,13 +1,13 @@
 require 'erb'
 require 'pry'
 require 'codebreaker'
-require_relative 'helpers/response'
-require_relative 'helpers/statistics'
+require_relative 'helpers/response_helper'
+require_relative 'helpers/statistics_helper'
 require_relative 'helpers/ui_helper'
 
 class Racker
-  include Response
-  include Statistics
+  include ResponseHelper
+  include StatisticsHelper
   include UIHelper
 
   def self.call(env)
@@ -19,6 +19,7 @@ class Racker
   end
 
   def response
+    # binding.pry
     @request.session[:init] = true
     if session_present?
       response_with_session

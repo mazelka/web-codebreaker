@@ -37,18 +37,18 @@
                 </tr>
               </thead>
               <tbody>
-              <%@statistic.each do |game|%>
-              <%i = 1%>
+              <% @statistic.each do |game| %>
+              <% i = 1 %>
                 <tr>
-                  <th scope="row"><%=i%></th>
-                  <td><%=game.name%></td>
-                  <td><%=level_to_word(game.difficulty)%></td>
-                  <td><%=game.attempts_available%>/<%=game.attempts_total%></td>
-                  <td><%=game.hints_available%>/<%=game.hints_total%></td>
-                  <td><%=game.date%></td>
+                  <th scope="row"><%= i %></th>
+                  <td><%= game.name %></td>
+                  <td><%= level_to_word(game.difficulty) %></td>
+                  <td><%= game.attempts_available %>/<%= game.attempts_total %></td>
+                  <td><%= game.hints_available %>/<%= game.hints_total %></td>
+                  <td><%= game.date %></td>
                 </tr>
-                 <%i += 1%>
-                 <%end%>
+                 <% i += 1 %>
+                 <% end %>
               </tbody>
             </table>
           </div>

@@ -4,8 +4,15 @@ require 'spec_helper'
 require_relative '../lib/racker.rb'
 
 RSpec.describe Racker do
+  path = File.expand_path('..', __dir__) + '/lib/storage/statistics_test.yaml'
+  StatisticsHelper::PATH_TO_STATISTICS = path
+
   def app
     Rack::Builder.parse_file('config.ru').first
+  end
+
+  after(:each) do
+    File.delete(path) if File.file?(path)
   end
 
   context 'session_id' do
@@ -141,11 +148,28 @@ RSpec.describe Racker do
         expect(last_response.status).to eq(200)
         expect(last_request.url).to include('/win')
       end
+
       it 'redirects to lose with correct attempt' do
         get '/submit_answer', { 'number' => '1101' }, env
         follow_redirect!
         expect(last_response.status).to eq(200)
         expect(last_request.url).to include('/lose')
+      end
+    end
+
+    context 'statistics' do
+      session_id = 'bed266c6ebe450dff8637545f671342b12dbf091d02058984b4452cc48bfc574'
+      rack_session = 'BAh7CkkiD3Nlc3Npb25faWQGOgZFVEkiRWJlZDI2NmM2ZWJlNDUwZGZmODYz%0ANzU0NWY2NzEzNDJiMTJkYmYwOTFkMDIwNTg5ODRiNDQ1MmNjNDhiZmM1NzQG%0AOwBGSSIJaW5pdAY7AEZUSSIJZ2FtZQY7AEZJIgH7LS0tICFydWJ5L29iamVj%0AdDpHYW1lCnN0YXRzOiAhcnVieS9vYmplY3Q6R2FtZVN0YXRpc3RpYwogIG5h%0AbWU6IEthc2hhCiAgYXR0ZW1wdHNfdXNlZDogMgogIGhpbnRzX3VzZWQ6IDEK%0AICBkYXRlOiAyMDE5LTA2LTA2IDEwOjMzCiAgZGlmZmljdWx0eTogMwogIGF0%0AdGVtcHRzX3RvdGFsOiA1CiAgaGludHNfdG90YWw6IDEKd29uOiB0cnVlCnNl%0AY3JldF9jb2RlOgotIDEKLSAxCi0gMQotIDIKYXZhaWxhYmxlX2hpbnRzOgot%0AIDEKLSAxCi0gMgoGOwBUSSILcmVzdWx0BjsARlsJSSIGKwY7AFRJIgYrBjsA%0AVEkiBisGOwBUSSIGKwY7AFRJIgpoaW50cwY7AEZbBmkG%0A--a95e154ad955d7ed6746393ed9f9033bd753365f'
+      let(:env) { { 'HTTP_COOKIE' => "rack.session=#{rack_session} " } }
+      let(:env) { { 'rack.session' => { 'session_id' => session_id, 'game' => "--- !ruby/object:Game\nstats: !ruby/object:GameStatistic\n  name: Test_name_for_statistic\n  attempts_used: 4\n  hints_used: 0\n  date: 2019-06-06 10:33\n  difficulty: 3\n  attempts_total: 5\n  hints_total: 1\nwon: false\nsecret_code:\n- 1\n- 1\n- 1\n- 1\navailable_hints:\n- 1\n- 1\n- 1\n", 'result' => ['+', '+', '+', '-'], 'hints' => [] } } }
+
+      it 'shows just lose game on statistics' do
+        get '/submit_answer', { 'number' => '1101' }, env
+        follow_redirect!
+        get '/statistics', {}, env
+        expect(last_response.status).to eq(200)
+        expect(last_request.url).to include('/statistics')
+        expect(last_response.body).to include('Test_name_for_statistic')
       end
     end
   end

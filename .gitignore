@@ -6,6 +6,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+/lib/storage/statistics.yaml
 
 # rspec failure tracking
 .rspec_status

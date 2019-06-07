@@ -24,19 +24,19 @@
               <button type="button" class="btn btn-primary" disabled>
                 Level:
                 <span class="badge badge-light">
-                  <%=level_to_word(@game.stats.difficulty)%>
+                  <%= level_to_word(@game.stats.difficulty) %>
                 </span>
               </button>
               <button type="button" class="btn btn-primary" disabled>
                 Attempts Left:
                 <span class="badge badge-light">
-                  <%=@game.stats.attempts_used %>/<%=@game.stats.attempts_total %>
+                  <%= @game.stats.attempts_used %>/<%= @game.stats.attempts_total %>
                 </span>
               </button>
               <button type="button" class="btn btn-primary" disabled>
                 Hints Left:
                 <span class="badge badge-light">
-                  <%=@game.stats.hints_used %>/<%=@game.stats.hints_total %>
+                  <%= @game.stats.hints_used %>/<%= @game.stats.hints_total %>
                 </span>
               </button>
             </div>
@@ -46,7 +46,7 @@
             <div class="text-center">
               <div class="text-center">
                 <h3 class="text-white">
-                  Congratulations, <%=@game.stats.name%> ! You won the game!
+                  Congratulations, <%= @game.stats.name %> ! You won the game!
                 </h3>
               </div>
               <img src="assets/images/won.gif" class="img-fluid" alt="You won the game!">

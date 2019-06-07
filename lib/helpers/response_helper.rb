@@ -1,4 +1,4 @@
-module Response
+module ResponseHelper
   def session_present?
     @request.session.key?(:session_id)
   end
