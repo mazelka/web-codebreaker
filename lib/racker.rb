@@ -19,7 +19,6 @@ class Racker
   end
 
   def response
-    # binding.pry
     @request.session[:init] = true
     if session_present?
       response_with_session
