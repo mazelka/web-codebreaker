@@ -17,16 +17,15 @@
           <div class="col-12 col-md-6">
             <div class="row">
               <div class="col-md-auto">
-                <h1 class="text-white title">Codebreaker 2018</h1>
+                <h1 class="text-white title">Codebreaker 2019</h1>
               </div>
             </div>
             <div class="row">
               <p class="lead text-white-70">
                 Try to guess 4-digit number, that consists of numbers in a range from 1 to 6.
-              </p>
             </div>
             <hr class="mb-4">
-            <form method="post" action="">
+            <form method="post" action="/start_game">
               <div class="form-group">
                 <label for="player_name" class="lead label">Player's name:</label>
                 <input class="form-control" name="player_name" id="player_name" pattern="^[\w\u0400-\u04ff]{3,20}$" placeholder="Your name" autofocus="" required="">
@@ -47,8 +46,8 @@
                 Start the game!
               </button>
               <span class="float-right">
-                <a class="btn btn-warning btn-lg" href="#" role="button">Rules</a>
-                <a class="btn btn-success btn-lg" href="#" role="button">Statistics</a>
+                <a class="btn btn-warning btn-lg" href="/rules" role="button">Rules</a>
+                <a class="btn btn-success btn-lg" href="/statistics" role="button">Statistics</a>
               </span>
             </form>
           </div>

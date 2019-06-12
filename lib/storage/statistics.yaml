@@ -1,0 +1,17 @@
+---
+- !ruby/object:GameStatistic
+  name: Masha
+  attempts_used: 5
+  hints_used: 0
+  date: 2019-06-07 12:54
+  difficulty: 3
+  attempts_total: 5
+  hints_total: 1
+- !ruby/object:GameStatistic
+  name: kashaaaaa
+  attempts_used: 8
+  hints_used: 2
+  date: 2019-06-07 13:04
+  difficulty: 1
+  attempts_total: 15
+  hints_total: 2
